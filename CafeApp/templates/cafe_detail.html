@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for list in image %}
+<div class="detail_container">
+    <span class="category_text" style="font-size: 2.5em;">{{ list.image_id.name }}</span>
+    <hr>
+    <div class="content" style="display: flex;">
+        <div style="width: 300px; margin: auto;">
+            <img src="{{ list.image_url }}" style="width: 100%;">
+        </div>
+        <div style="margin: auto;">
+            <table>
+                <tr>
+                    <td class="category_text">주소</td>
+                    <td class="category_content">
+                        {{ list.image_id.add1 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">도로명</td>
+                    <td class="category_content">
+                        {{ list.image_id.add2 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">전화번호</td>
+                    <td class="category_content">
+                        {{ list.image_id.tel1 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">주차</td>
+                    <td class="category_content">
+                        {{ list.image_id.ballet }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">영업시간</td>
+                    <td class="category_content">
+                        {{ list.image_id.opening }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">휴일</td>
+                    <td class="category_content">
+                        {{ list.image_id.off }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">좌석</td>
+                    <td class="category_content">
+                        {{ list.image_id.sit }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">주류판매</td>
+                    <td class="category_content">
+                        {{ list.image_id.alcohol }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">금연석</td>
+                    <td class="category_content">
+                        {{ list.image_id.smoke }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">예약</td>
+                    <td class="category_content">
+                        {{ list.image_id.reservation }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">화장실</td>
+                    <td class="category_content">
+                        {{ list.image_id.restroom }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">배달</td>
+                    <td class="category_content">
+                        {{ list.image_id.delivery }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category_text">평점</td>
+                    <td class="category_content">
+                        {% for scores in score %}
+                            <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                            <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                            <progress value="{{ scores.score }}" max="5"></progress>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="cafe_introdurce">
+        <span class="category_content" style="font-size: 1.1em;">{{ list.image_id.introduce }}</span>
+    </div>
+    <hr>
+</div>
+<div class="side_bar">
+    {% for names in name_1 %}
+        {{ names.name }}
+    {% endfor %}
+    {% for names in name_2 %}
+        {{ names.name }}
+    {% endfor %}
+    {% for names in name_3 %}
+        {{ names.name }}
+    {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

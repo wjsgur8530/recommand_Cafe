@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="get">
+{% for i in data %}
+    <input type="submit" class="btn btn-outline-primary" name="name" value="{{ i }}">
+{% endfor %}
+</form>
+{% endblock %}

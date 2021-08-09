@@ -1,0 +1,60 @@
+<head>
+    {% include 'head.html' %}
+</head>
+<script type="text/javascript">
+    var img=new Array();
+    img[0]=new Image(); img[0].src="http://www.lightingnews.net/images/theme/cafe_01.png";
+    img[1]=new Image(); img[1].src="https://www.jeongdong.or.kr/static/portal/img/HKPU_04_04_pic1.jpg";
+    img[2]=new Image(); img[2].src="https://www.park-roche.com/resources/images/contents/dining/img_dining02_02.png";
+    var interval=2000;
+    var n=0;
+    var imgs = new Array("http://www.lightingnews.net/images/theme/cafe_01.png","https://www.jeongdong.or.kr/static/portal/img/HKPU_04_04_pic1.jpg","https://www.park-roche.com/resources/images/contents/dining/img_dining02_02.png");
+    function rotate()
+    {
+        if(navigator.appName=="Netscape" && document.getElementById) {
+            document.getElementById("slide").src=imgs[n];
+        }
+        else
+            document.images.slide.src=imgs[n];
+            (n==(imgs.length-1))?n=0:n++;
+            setTimeout("rotate()", interval);
+    }
+</script>
+<body onload="rotate()">
+<!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'theme' %}">추천카페</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'map' %}">카페 맵</a></li>
+                    {% if not user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">로그인</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">회원가입</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">로그아웃</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container_box">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>

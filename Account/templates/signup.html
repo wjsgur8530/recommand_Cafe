@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="intro-bg" style="height:80.1vh;">
+<div class="wrapper" style="text-align: center;">
+    <div class="form-container">
+        <div class="button-wrap">
+        <div id="btn"></div>
+        <button type="button" class="togglebtn" onclick="login()"><span>LOG IN</span></button>
+        <button type="button" class="togglebtn" onclick="register()"><span>REGISTER</span></button>
+    </div>
+    <form id="register" method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <input name="username" type="text" class="btn-radius" placeholder="아이디">
+        <br><br>
+        <input name="password1" type="password" class="btn-radius" placeholder="비밀번호">
+        <br><br>
+        <input name="password2" type="password" class="btn-radius" placeholder="비밀번호 확인">
+        <br><br>
+        <input name="email" type="email" class="btn-radius" placeholder="이메일">
+        <br><br>
+        <input type="submit" class="btn btn-primary rounded-pill col-6" value="회원가입">
+    </form>
+    <form id="login" method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input name="username" type="text" class="btn-radius" placeholder="아이디">
+        <br><br>
+        <input name="password1" type="password" class="btn-radius" placeholder="비밀번호"> <br><br>
+        <input type="submit" class="btn btn-primary rounded-pill col-6" value="로그인">
+    </form>
+    </div>
+</div>
+</div>
+<script>
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+    var z = document.getElementById("btn");
+    x.style.display = "none";
+    z.style.left = "120px";
+
+    function login(){
+        x.style.display = "block";
+        y.style.display = "none";
+        z.style.left = "0";
+    }
+    function register(){
+        x.style.display = "none";
+        y.style.display = "block";
+        z.style.left = "120px";
+    }
+</script>
+{% endblock %}

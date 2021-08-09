@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 style="text-align: center; padding-top: 30px;">테마 선택</h3>
+<form action="{% url 'category_result' %}" method="POST" accept-charset="utf-8">
+    {% csrf_token %}
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in theme_list %}
+    <div class="item">
+        <p style="text-align: left; font-size: 0.8em;" id="grid-start">
+            <input type="checkbox" name="theme" value="{{ list }}"> {{ list }}
+        </p>
+    </div>
+    {% endfor %}
+    </div>
+    <div style="text-align: center;">
+        <input type="reset" class="btn btn-light col-3" value="초기화" style="border: 1px solid black;">
+        <input type="submit" class="btn btn-dark col-3" value="검색" id="btn_search">
+    </div>
+</form>
+
+<!--{% for i in cafe_list %}-->
+<!--    {{ i }} <br>-->
+<!--{% endfor %}-->
+{% endblock %}
