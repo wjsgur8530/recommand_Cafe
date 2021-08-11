@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <header class="bg-white">
         <div class="intro-bg">
             <div class="search">
                 <h2 class="search_title">Instagram Cafe</h2>
             <ul class="board_module_search">
-                <form method="get" action="">
+                <form method="get" action="{% url 'search' %}">
                     <li>
                         <input type="text" name="search" id="search" placeholder="지역, 카페 이름 또는 메뉴">
                     </li>
@@ -21,16 +22,26 @@
         <h1 class="display-5 fw-bolder text-black mb-4" style="font-size: 2em;">내 주변 카페 찾기</h1>
         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
             <a class="btn btn-dark btn-lg px-4 me-sm-3 rounded-pill" href="#grid-start">카페 둘러보기</a>
+            <a class="btn btn-dark btn-lg px-4 me-sm-3 rounded-pill" href="{% url 'crawling' %}">카페 업데이트</a>
         </div>
-        <h2 class="display-5 fw-bolder text-black mt-4 mb-4" style="font-size: 2em;">'{{ query }}' 검색 결과</h2>
     </div>
-    <div style="display: grid; grid-template-columns: 206px 206px 206px 206px; grid-template-rows: 250px 250px 250px; align-items: center; justify-content: center;">
-    {% for list in page_obj %}
-    <div class="item" style="padding-top: 15px;">
+    <h2 class="display-5 fw-bolder text-black mt-4 mb-4" style="font-size: 2em; text-align: center;">'{{ query }}' 검색 결과</h2>
+    <div class="grid_cotainer" style="display: grid; grid-template-columns: 300px 300px 300px 300px; grid-gap: 20px 20px; align-items: center; justify-content: center;">
+    {% for item1, item2, item3, item4 in zip_list %}
+    <div class="item">
         <p style="text-align: left; font-size: 0.8em;" id="grid-start">
-            <a href="" style="text-decoration: none; color: black;">
-                <img src="{{ list.cafe_img }}" style="width: 180px; height: 150px;" alt="" border="1"> <br>
-                <span style="font-weight: bold;">{{ list.name }}</span> <br>
+            <a href="{% url 'detail' item1.pk %}" style="text-decoration: none; color: black;">
+                {% if not item4.image_url == "None" %}
+                    <img src="{{ item4.image_url }}" style="width: 100%; height: 200px; border-radius: 25px 25px 0 0;"> <br>
+                <hr>
+                {% endif %}
+                <span style="font-weight: bold; font-size: 1.1em;">{{ item1.name }}</span> <br>
+                <span style="font-size: 1.2em; color: orange;">{{ item2.score }}</span>
+                <span style="font-size: 1.2em;">/ 5.0</span><br>
+                <span style="font-weight: bold; font-size: 0.9em;">{{ item1.add1 }}</span> <br>
+                <span style="font-weight: bold; font-size: 0.9em;">{{ item1.tel1 }}</span> <br>
+                <span style="font-weight: bold; font-size: 0.9em;"><img src="{% static 'img/hit.png' %}" style="width: 20px;"> {{ item1.hit }}</span>
+                <span style="font-weight: bold; font-size: 0.9em;"><img src="{% static 'img/comment.png' %}" style="width: 20px;"> {{ item3.count }}</span> <br>
             </a>
         </p>
     </div>
@@ -42,7 +53,7 @@
             <!-- 이전페이지 -->
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?search={{ query }}&page={{ page_obj.previous_page_number }}">이전</a>
+                <a class="page-link" href="?search={{ query }}&page={{ page_number }}">이전</a>
                 <!-- href로 뎁스 설정 -->
             </li>
             {% else %}
@@ -52,20 +63,22 @@
             {% endif %}
             <!-- 페이지리스트 -->
             {% for page_number in page_obj.paginator.page_range %}
-            {% if page_number == page_obj.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?search={{ query }}&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?search={{ query }}&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% endif %}
+                {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
+                    {% if page_number == page_obj.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?search={{ query }}&page={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?search={{ query }}&page={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
             <!-- 다음페이지 -->
             {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?search={{ query }}&page={{ page_obj.next_page_number }}">다음</a>
+                <a class="page-link" href="?search={{ query }}&page={{ page_number }}">다음</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -75,4 +88,5 @@
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
+
 {% endblock %}

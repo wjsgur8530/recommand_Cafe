@@ -1,17 +1,84 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 style="text-align: center; padding-top: 30px;">테마 선택</h3>
 <form action="{% url 'category_result' %}" method="POST" accept-charset="utf-8">
     {% csrf_token %}
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">지역 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in location %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-1">
+                <input type="checkbox" name="location" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">흡연 유무 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in smoke %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-2">
+                <input type="checkbox" name="smoke" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">예약 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in reservation %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-3">
+                <input type="checkbox" name="reservation" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">화장실 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in restroom %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-4">
+                <input type="checkbox" name="restroom" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">배달 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in delivery %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-5">
+                <input type="checkbox" name="delivery" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">주차 선택</h3>
+    <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
+    {% for list in ballet %}
+        <div class="items">
+            <p style="text-align: left; font-size: 0.8em;" id="grid-start-6">
+                <input type="checkbox" name="ballet" value="{{ list }}"> {{ list }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h3 style="text-align: center; padding-top: 30px; padding-bottom: 30px;" class="filter_title">테마 선택</h3>
     <div style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px 200px 200px 200px; align-items: center; justify-content: center;">
     {% for list in theme_list %}
-    <div class="item">
-        <p style="text-align: left; font-size: 0.8em;" id="grid-start">
+    <div class="items">
+        <p style="text-align: left; font-size: 0.8em;" id="grid-start-7">
             <input type="checkbox" name="theme" value="{{ list }}"> {{ list }}
         </p>
     </div>
     {% endfor %}
     </div>
+    <hr>
     <div style="text-align: center;">
         <input type="reset" class="btn btn-light col-3" value="초기화" style="border: 1px solid black;">
         <input type="submit" class="btn btn-dark col-3" value="검색" id="btn_search">

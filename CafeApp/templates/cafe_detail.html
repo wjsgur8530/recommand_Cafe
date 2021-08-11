@@ -1,116 +1,412 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for list in image %}
-<div class="detail_container">
-    <span class="category_text" style="font-size: 2.5em;">{{ list.image_id.name }}</span>
-    <hr>
-    <div class="content" style="display: flex;">
-        <div style="width: 300px; margin: auto;">
-            <img src="{{ list.image_url }}" style="width: 100%;">
-        </div>
-        <div style="margin: auto;">
-            <table>
-                <tr>
-                    <td class="category_text">주소</td>
-                    <td class="category_content">
-                        {{ list.image_id.add1 }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">도로명</td>
-                    <td class="category_content">
-                        {{ list.image_id.add2 }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">전화번호</td>
-                    <td class="category_content">
-                        {{ list.image_id.tel1 }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">주차</td>
-                    <td class="category_content">
-                        {{ list.image_id.ballet }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">영업시간</td>
-                    <td class="category_content">
-                        {{ list.image_id.opening }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">휴일</td>
-                    <td class="category_content">
-                        {{ list.image_id.off }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">좌석</td>
-                    <td class="category_content">
-                        {{ list.image_id.sit }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">주류판매</td>
-                    <td class="category_content">
-                        {{ list.image_id.alcohol }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">금연석</td>
-                    <td class="category_content">
-                        {{ list.image_id.smoke }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">예약</td>
-                    <td class="category_content">
-                        {{ list.image_id.reservation }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">화장실</td>
-                    <td class="category_content">
-                        {{ list.image_id.restroom }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">배달</td>
-                    <td class="category_content">
-                        {{ list.image_id.delivery }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category_text">평점</td>
-                    <td class="category_content">
-                        {% for scores in score %}
-                            <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
-                            <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
-                            <progress value="{{ scores.score }}" max="5"></progress>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </table>
+{{ detail.update_counter }}
+<body class="detail">
+<div class="container_box" style="display: flex;  align-items: center;" id="container_box">
+    {% for pre in cafe_name_pre %}
+    <div class="item1" style="padding-left: 175px; padding-right: 50px;">
+        <a href="{% url 'detail' pre.pk %}" class="left_direction">
+            <span class="material-icons">
+            arrow_back_ios
+            </span>
+        </a>
+    </div>
+    {% endfor %}
+    {% for list in image %}
+    {% if list.pk == 1 %}
+    <div class="item1" style="padding-left: 255px; padding-right: 50px;"></div>
+    {% endif %}
+    <div class="detail_container" id="detail_container" style="height: 78.5vh; margin-top: 1em; margin-bottom: 1em; overflow:hidden;">
+        <div class="item2">
+            <span class="detail_cafe_name" style="font-size: 2em;"><em>{{ list.image_id.name }}&nbsp;</em></span>
+            <hr>
+            <div class="content" style="display: flex;">
+                <div style="width: 300px; margin: auto;">
+                    <img src="{{ list.image_url }}" style="width: 100%;">
+                </div>
+                <div style="margin: auto;">
+                    <table>
+                        <tr>
+                            <td class="category_text">주소</td>
+                            <td class="category_content">
+                                {{ list.image_id.add1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">도로명</td>
+                            <td class="category_content">
+                                {{ list.image_id.add2 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">전화번호</td>
+                            <td class="category_content">
+                                {{ list.image_id.tel1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주차</td>
+                            <td class="category_content">
+                                {{ list.image_id.ballet }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">영업시간</td>
+                            <td class="category_content">
+                                {{ list.image_id.opening }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">휴일</td>
+                            <td class="category_content">
+                                {{ list.image_id.off }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">좌석</td>
+                            <td class="category_content">
+                                {{ list.image_id.sit }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주류판매</td>
+                            <td class="category_content">
+                                {{ list.image_id.alcohol }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">금연석</td>
+                            <td class="category_content">
+                                {{ list.image_id.smoke }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">예약</td>
+                            <td class="category_content">
+                                {{ list.image_id.reservation }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">화장실</td>
+                            <td class="category_content">
+                                {{ list.image_id.restroom }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">배달</td>
+                            <td class="category_content">
+                                {{ list.image_id.delivery }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">평점</td>
+                            <td class="category_content">
+                                {% for scores in score %}
+                                    <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                                    <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                    <progress value="{{ scores.score }}" max="5"></progress>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h5 class="cafe_introduce"><b>카페 소개</b></h5>
+                <span style="font-size: 1em;">{{ list.image_id.introduce }}</span>
+            </div>
+            <hr>
+            {% for themes in cafe_theme %}
+                <a href="{% url 'hash' themes.theme %}" style="text-decoration: none;">#{{ themes.theme }}</a>
+            {% endfor %}
+            {% if current_comment %}
+            <div class="comment_scroll" style="overflow: auto; width: 100%;">
+                {% for comments in current_comment %}
+                    <span style="font-size: 0.7em; color: dodgerblue;">new</span>
+                    <span class="comment_text" style="font-weight: bold;">{{ comments.author }}</span>
+                    <span class="comment_text" style="padding-left: 0.5em;">{{ comments.comment }}</span><br>
+                    <span class="comment_text">{{ comments.create_at }}</span><br>
+                {% endfor %}
+                <button onclick="comment()" style="border: none; background-color: white; color: #333;">댓글 보기</button>
+            </div>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <form action="{% url 'detail' list.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" class="comment_box" name="comment" style="border: none; width: 90%;" placeholder="댓글 달기...">
+                    <input type="submit" class="comment_submit_btn" value="게시">
+                </form>
+            {% endif %}
         </div>
     </div>
-    <hr>
-    <div class="cafe_introdurce">
-        <span class="category_content" style="font-size: 1.1em;">{{ list.image_id.introduce }}</span>
+    {% for next in name_1 %}
+    <div class="item1" style="padding-left: 50px;">
+        <a href="{% url 'detail' next.pk %}" class="right_direction">
+            <span class="material-icons">
+                arrow_forward_ios
+            </span>
+        </a>
     </div>
-    <hr>
+    {% endfor %}
 </div>
-<div class="side_bar">
-    {% for names in name_1 %}
-        {{ names.name }}
-    {% endfor %}
-    {% for names in name_2 %}
-        {{ names.name }}
-    {% endfor %}
-    {% for names in name_3 %}
-        {{ names.name }}
-    {% endfor %}
+<div class="side_bar" style="text-align: center;">
+    <span class="more_tag">카페 더보기</span>
+    <div class="side_bar_content">
+        {% for names in name_1 %}
+        <a href="{% url 'detail' names.pk %}" style="text-decoration: none;" class="detail_href">
+            <div class="side_content_1" style="display: flex; background-color: #fff; border-radius: 25px 25px 25px 25px;">
+                {% for images in image_1 %}
+                    <div style="width: 150px;">
+                        <img src="{{ images.image_url }}" style="width: 100%;">
+                    </div>
+                {% endfor %}
+                <div style="padding-left: 20px;">
+                    <table>
+                        <tr>
+                            <td class="category_text">카페이름</td>
+                            <td class="category_content">
+                                {{ names.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주소</td>
+                            <td class="category_content">
+                                {{ names.add1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">영업시간</td>
+                            <td class="category_content">
+                                {{ names.opening }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">휴일</td>
+                            <td class="category_content">
+                                {{ names.off }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">배달</td>
+                            <td class="category_content">
+                                {{ names.delivery }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">평점</td>
+                            <td class="category_content">
+                                {% for scores in score_1 %}
+                                    <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                                    <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                    <progress value="{{ scores.score }}" max="5"></progress>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% for names in name_2 %}
+        <a href="{% url 'detail' names.pk %}" style="text-decoration: none;" class="detail_href">
+            <div class="side_content_1" style="display: flex; background-color: #fff; border-radius: 25px 25px 25px 25px;">
+                {% for images in image_2 %}
+                    <div style="width: 150px;">
+                        <img src="{{ images.image_url }}" style="width: 100%;">
+                    </div>
+                {% endfor %}
+                <div style="padding-left: 20px;">
+                    <table>
+                        <tr>
+                            <td class="category_text">카페이름</td>
+                            <td class="category_content">
+                                {{ names.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주소</td>
+                            <td class="category_content">
+                                {{ names.add1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">영업시간</td>
+                            <td class="category_content">
+                                {{ names.opening }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">휴일</td>
+                            <td class="category_content">
+                                {{ names.off }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">배달</td>
+                            <td class="category_content">
+                                {{ names.delivery }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">평점</td>
+                            <td class="category_content">
+                                {% for scores in score_2 %}
+                                    <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                                    <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                    <progress value="{{ scores.score }}" max="5"></progress>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% for names in name_3 %}
+        <a href="{% url 'detail' names.pk %}" style="text-decoration: none;" class="detail_href">
+            <div class="side_content_1" style="display: flex; background-color: #fff; border-radius: 25px 25px 25px 25px;">
+                {% for images in image_3 %}
+                    <div style="width: 150px;">
+                        <img src="{{ images.image_url }}" style="width: 100%;">
+                    </div>
+                {% endfor %}
+                <div style="padding-left: 20px;">
+                    <table>
+                        <tr>
+                            <td class="category_text">카페이름</td>
+                            <td class="category_content">
+                                {{ names.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주소</td>
+                            <td class="category_content">
+                                {{ names.add1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">영업시간</td>
+                            <td class="category_content">
+                                {{ names.opening }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">휴일</td>
+                            <td class="category_content">
+                                {{ names.off }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">배달</td>
+                            <td class="category_content">
+                                {{ names.delivery }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">평점</td>
+                            <td class="category_content">
+                                {% for scores in score_3 %}
+                                    <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                                    <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                    <progress value="{{ scores.score }}" max="5"></progress>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% for names in name_4 %}
+        <a href="{% url 'detail' names.pk %}" style="text-decoration: none;" class="detail_href">
+            <div class="side_content_1" style="display: flex; background-color: #fff; border-radius: 25px 25px 25px 25px;">
+                {% for images in image_4 %}
+                    <div style="width: 150px;">
+                        <img src="{{ images.image_url }}" style="width: 100%;">
+                    </div>
+                {% endfor %}
+                <div style="padding-left: 20px;">
+                    <table>
+                        <tr>
+                            <td class="category_text">카페이름</td>
+                            <td class="category_content">
+                                {{ names.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">주소</td>
+                            <td class="category_content">
+                                {{ names.add1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">영업시간</td>
+                            <td class="category_content">
+                                {{ names.opening }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">휴일</td>
+                            <td class="category_content">
+                                {{ names.off }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">배달</td>
+                            <td class="category_content">
+                                {{ names.delivery }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category_text">평점</td>
+                            <td class="category_content">
+                                {% for scores in score_4 %}
+                                    <span class="category_content" style="color: orange; font-size: 1.1em;">{{ scores.score }}</span>
+                                    <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                    <progress value="{{ scores.score }}" max="5"></progress>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 </div>
 {% endfor %}
+{% if comment %}
+<div class="comment_side_bar" id="comment_side_bar" style="overflow: auto;">
+    <button onclick="remove()" style="text-align: right; background-color: white; border: none;">X</button><span>전체 댓글</span>
+    <div class="comment_scroll" style="overflow: hidden; width: 100%; background-color: white;">
+        {% for comments in comment %}
+            <table>
+                <tr>
+                    <td class="comment_text" style="font-weight: bold; border-radius: 25px 25px 25px 25px; color: dodgerblue;"> {{ comments.author }}</td>
+                    <td class="comment_text" style="padding-left: 0.5em;"> {{ comments.comment }}</td>
+                </tr>
+                <hr>
+            </table>
+            <h6 style="text-align: right; font-size: 0.5em;">{{ comments.create_at }}</h6>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+</body>
+<script>
+    var x = document.getElementById('comment_side_bar');
+    var y = document.getElementById('container_box');
+    x.style.display = "none";
+    function comment() {
+        x.style.display = "block";
+        y.style.marginLeft = "-5%";
+        y.style.transition = "0.5s";
+    }
+    function remove() {
+        x.style.display = "none";
+        y.style.marginLeft = "0";
+        y.style.transition = "0.5s";
+    }
+</script>
 {% endblock %}

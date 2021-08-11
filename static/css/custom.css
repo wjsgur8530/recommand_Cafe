@@ -50,6 +50,9 @@
     box-sizing: border-box;
     border-radius: 25px 0 0 25px;
 }
+.search .board_module_search li #search:focus {
+    outline: none;
+}
 
 .search .board_module_search li .board_btn {
     background-color: #4f4f4f;
@@ -64,7 +67,11 @@
     font-family: 'Noto Sans KR', sans-serif;
     margin-left: 2px;
 }
-.search_title { text-align: center; color: white; font-family: 'Noto Sans KR', sans-serif; font-size: 2.8em; padding-top: 170px; text-shadow: #4f4f4f 5px 0 5px;}
+.search .board_module_search li .board_btn:hover {
+    background-color: black;
+    border: 1px solid white;
+}
+.search_title { text-align: center; color: white; font-family: 'Noto Sans KR', sans-serif; font-size: 2.8em; padding-top: 100px; text-shadow: #4f4f4f 5px 0 5px;}
 
 .item {
     padding-top: 15px; overflow: hidden; padding: 10px; border: 1px solid #D3D3D3; border-radius: 25px 25px 25px 25px;
@@ -74,24 +81,128 @@
     z-index: 0;
     border: 1px solid #808080;
 }
+.side_content_1:hover, .side_content_1 div img {
+    z-index: 0;
+    border: 1px solid #808080;
+}
 .category_text {
     font-size: 0.8em;
     font-family: 'Noto Sans KR', sans-serif;
-    padding: 0.2em;
-    padding-right: 3em;
+    width: 90px;
+    padding-left: 5px;
 }
 .category_content {
+    width: 300px;
     font-size: 0.8em;
     font-family: 'Noto Sans KR', sans-serif;
 }
 .detail_container {
-    padding: 10px; border: 1px solid #D3D3D3; border-radius: 25px 25px 25px 25px; width: 700px; margin-left: 10%;
+    padding: 10px; border: 1px solid #D3D3D3; width: 700px; border-radius: 25px 25px 25px 25px; background-color: white;
 }
 .detail_container:hover {
     z-index: 0;
     border: 1px solid #808080;
 }
 .side_bar {
+    border: 1px solid #D3D3D3;
+    background-color: #F5F5F5;
+    width: 30%;
+    height: 80%;
     position: fixed;
     right: 0;
+    top: 6.5%;
+}
+.side_bar .side_bar_content {
+    padding: 10px;
+}
+.detail_href {
+    padding: 3px;
+}
+.comment_box:focus {
+    outline: none;
+}
+.comment_submit_btn {
+    background-color: #fff;
+    outline: none;
+    border: none;
+    color: dodgerblue;
+}
+
+.comment_text {
+    font-size: 0.8em;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 5px;
+}
+.comment_side_bar {
+    border: 1px solid #D3D3D3;
+    background-color: white;
+    width: 15%;
+    max-height: 80%;
+    position: fixed;
+    right: 30%;
+    top: 6.5%;
+}
+.comment_side_bar::-webkit-scrollbar {
+    width: 2px; /*스크롤바의 너비*/
+}
+
+.comment_side_bar::-webkit-scrollbar-thumb {
+    background-color: yellow;
+}
+
+.comment_side_bar::-webkit-scrollbar-track {
+    background-color: #D3D3D3;
+
+}
+body.detail {
+    background-image: url(https://www.park-roche.com/resources/images/contents/dining/img_dining02_02.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 9999;
+}
+
+.detail_cafe_name {
+    background: linear-gradient(180deg,white 95%, #FFD0AE 10%);
+    border-radius: 30px 0px;
+}
+.material-icons:hover {
+    color: black;
+}
+.more_tag {
+    font-family: 'Staatliches', cursive; font-size: 2em; text-align: center; color: #F1C164; text-shadow: 2px 2px #2D63A7; margin: 0; text-decoration: underline; text-decoration-style: wavy;
+}
+.filter_title {
+    font-family: 'Staatliches', cursive; font-size: 2em; text-align: center; color: #F1C164; text-shadow: 2px 2px #2D63A7; margin: 0;
+}
+.hash-bg {
+    background-image: url(https://www.park-roche.com/resources/images/contents/dining/img_dining02_02.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 400px;
+    box-shadow: 0px 7px 10px black;
+}
+
+.main_title {
+  display: inline-block;
+  margin: 50px auto 0;
+  padding: 10px 25px;
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(to right, #fbcac9, #8ca6ce);
+  border-radius: 500px;
+}
+.main_title span {
+  background: linear-gradient(to right, #fbcac9, #8ca6ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.main_title:hover {
+    color: black;
 }

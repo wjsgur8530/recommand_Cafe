@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <header class="bg-white">
         <div class="intro-bg">
             <div class="search">
-                <h2 class="search_title">Instagram Cafe</h2>
+                <h2 class="search_title"><em><span class="main_title">#Cafe`in_stargram</span></em></h2>
             <ul class="board_module_search">
                 <form method="get" action="{% url 'search' %}">
                     <li>
@@ -21,20 +22,27 @@
         <h1 class="display-5 fw-bolder text-black mb-4" style="font-size: 2em;">내 주변 카페 찾기</h1>
         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
             <a class="btn btn-dark btn-lg px-4 me-sm-3 rounded-pill" href="#grid-start">카페 둘러보기</a>
-            <a class="btn btn-dark btn-lg px-4 me-sm-3 rounded-pill" href="{% url 'crawling' %}">카페 업데이트</a>
+            {% if user.is_authenticated %}
+                <a class="btn btn-dark btn-lg px-4 me-sm-3 rounded-pill" href="{% url 'crawling' %}">카페 업데이트</a>
+            {% endif %}
         </div>
     </div>
     <div class="grid_cotainer" style="display: grid; grid-template-columns: 300px 300px 300px 300px; grid-gap: 20px 20px; align-items: center; justify-content: center;">
-    {% for list in page_obj %}
-    <div class="item">
+    {% for item1, item2, item3, item4 in zip_list %}
+    <div class="item" id="item">
         <p style="text-align: left; font-size: 0.8em;" id="grid-start">
-            <a href="{% url 'detail' list.pk %}" style="text-decoration: none; color: black;">
-                <img src="{{ list.image_url }}" style="width: 100%; height: 200px; border-radius: 25px 25px 0 0;"> <br>
+            <a href="{% url 'detail' item1.pk %}" style="text-decoration: none; color: black;">
+                {% if not item4.image_url == "None" %}
+                    <img src="{{ item4.image_url }}" style="width: 100%; height: 200px; border-radius: 25px 25px 0 0;"> <br>
                 <hr>
-                <span style="font-weight: bold;">{{ list.image_id.name }}</span> <br>
-                <span style="font-weight: bold; font-size: 0.9em;">{{ list.image_id.add1 }}</span> <br>
-                <span style="font-weight: bold; font-size: 0.9em;">전화번호: {{ list.image_id.tel1 }}</span> <br>
-                <span style="font-weight: bold; font-size: 0.9em;">조회수: {{ list.image_id.hit }}</span> <br>
+                {% endif %}
+                <span style="font-weight: bold; font-size: 1.1em;">{{ item1.name }}</span> <br>
+                <span style="font-size: 1.2em; color: orange;">{{ item2.score }}</span>
+                <span style="font-size: 1.2em;">/ 5.0</span><br>
+                <span style="font-weight: bold; font-size: 0.9em;">{{ item1.add1 }}</span> <br>
+                <span style="font-weight: bold; font-size: 0.9em;">{{ item1.tel1 }}</span> <br>
+                <span style="font-weight: bold; font-size: 0.9em;"><img src="{% static 'img/hit.png' %}" style="width: 20px;"> {{ item1.hit }}</span>
+                <span style="font-weight: bold; font-size: 0.9em;"><img src="{% static 'img/comment.png' %}" style="width: 20px;"> {{ item3.count }}</span> <br>
             </a>
         </p>
     </div>
@@ -57,15 +65,17 @@
             {% endif %}
             <!-- 페이지리스트 -->
             {% for page_number in page_obj.paginator.page_range %}
-            {% if page_number == page_obj.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% endif %}
+                {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
+                    {% if page_number == page_obj.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
             <!-- 다음페이지 -->
             {% if page_obj.has_next %}
@@ -84,126 +94,170 @@
     <section class="bg-light py-5 border-bottom">
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
-                <h2 class="fw-bolder" style="font-family: 'Noto Sans KR', sans-serif;">주간 인기 카페</h2>
-                <p class="lead mb-0" style="font-family: 'Noto Sans KR', sans-serif;">popular cafe of weeks</p>
+                <p class="lead mb-0" style="font-family: 'Staatliches', cursive; font-size: 3em; text-align: center; color: #F1C164; text-shadow: 2px 2px #2D63A7; margin: 0;"><em>popular cafe of weeks</em></p>
             </div>
             <div class="row gx-5 justify-content-center">
                 <!-- Pricing card free-->
-                {% for list in hit_cafe %}
+                {% for item1, item2, item3 in mylist %}
                 <div class="col-lg-6 col-xl-4">
                     <div class="card mb-5 mb-xl-0">
+                        <a href="{% url 'detail' item2.pk %}" style="text-decoration: none;">
                         <div class="card-body p-5">
-                            <img src="{{ list.cafe_img }}" style="width: 275px; height: 150px;" alt="" border="1"> <br>
-                            <span style="font-weight: bold;">{{ list.title }}</span> <br>
+                            <span style="font-weight: bold; color: black;">{{ item3.name }}</span> <br>
+                            <img src="{{ item1.image_url }}" style="width: 275px; height: 180px; border: none;" alt="" border="1"> <br>
+                            <table>
+                                <tr>
+                                    <td class="category_text">주소</td>
+                                    <td class="category_content">
+                                        {{ item3.add1 }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">도로명</td>
+                                    <td class="category_content">
+                                        {{ item3.add2 }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td class="category_text">전화번호</td>
+                                    <td class="category_content">
+                                        {{ item3.tel1 }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">주차</td>
+                                    <td class="category_content">
+                                        {{ item3.ballet }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">영업시간</td>
+                                    <td class="category_content">
+                                        {{ item3.opening }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">휴일</td>
+                                    <td class="category_content">
+                                        {{ item3.off }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">좌석</td>
+                                    <td class="category_content">
+                                        {{ item3.sit }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">주류판매</td>
+                                    <td class="category_content">
+                                        {{ item3.alcohol }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">금연석</td>
+                                    <td class="category_content">
+                                        {{ item3.smoke }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">예약</td>
+                                    <td class="category_content">
+                                        {{ item3.reservation }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">화장실</td>
+                                    <td class="category_content">
+                                        {{ item3.restroom }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">배달</td>
+                                    <td class="category_content">
+                                        {{ item3.delivery }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category_text">평점</td>
+                                    <td class="category_content">
+                                        <span class="category_content" style="color: orange; font-size: 1.1em;">{{ item2.score }}</span>
+                                        <span class="category_content" style="font-size: 1.1em; padding-right: 10px;">/ 5.0</span>
+                                        <progress value="{{ item2.score }}" max="5"></progress>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
-    <!-- Testimonials section-->
-    <section class="py-5 border-bottom">
-        <div class="container px-5 my-5 px-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bolder">Customer testimonials</h2>
-                <p class="lead mb-0">Our customers love working with us</p>
-            </div>
-            <div class="row gx-5 justify-content-center">
-                <div class="col-lg-6">
-                    <!-- Testimonial 1-->
-                    <div class="card mb-4">
-                        <div class="card-body p-4">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>
-                                <div class="ms-4">
-                                    <p class="mb-1">Thank you for putting together such a great product. We loved working with you and the whole team, and we will be recommending you to others!</p>
-                                    <div class="small text-muted">- Client Name, Location</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Testimonial 2-->
-                    <div class="card">
-                        <div class="card-body p-4">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>
-                                <div class="ms-4">
-                                    <p class="mb-1">The whole team was a huge help with putting things together for our company and brand. We will be hiring them again in the near future for additional work!</p>
-                                    <div class="small text-muted">- Client Name, Location</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Chart section-->
+    <section class="py-5 border-bottom" style="text-align: center;">
+        <p class="lead mb-0" style="font-family: 'Staatliches', cursive; font-size: 3em; text-align: center; color: #F1C164; text-shadow: 2px 2px #2D63A7; margin: 0;"><em>Best 10 Cafe</em></p>
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
     </section>
-    <!-- Contact section-->
-    <section class="bg-light py-5">
-        <div class="container px-5 my-5 px-5">
-            <div class="text-center mb-5">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                <h2 class="fw-bolder">Get in touch</h2>
-                <p class="lead mb-0">We'd love to hear from you</p>
-            </div>
-            <div class="row gx-5 justify-content-center">
-                <div class="col-lg-6">
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- This form is pre-integrated with SB Forms.-->
-                    <!-- To make this form functional, sign up at-->
-                    <!-- https://startbootstrap.com/solution/contact-forms-->
-                    <!-- to get an API token!-->
-                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <!-- Name input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                            <label for="name">Full name</label>
-                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                        </div>
-                        <!-- Email address input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                            <label for="email">Email address</label>
-                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                        </div>
-                        <!-- Phone number input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                            <label for="phone">Phone number</label>
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                        </div>
-                        <!-- Message input-->
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                            <label for="message">Message</label>
-                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                        </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                        <!-- Submit Button-->
-                        <div class="d-grid"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  var totalArray = new Array();
+  var nameArray = new Array();
+  var scoreArray = new Array();
+  var commentArray = new Array();
+  var hitArray = new Array();
+  var test = new Array();
+  nameArray = [
+      {% for list in cafe %}
+        "{{ list.name }}",
+      {% endfor %}
+  ]
+  scoreArray = [
+      {% for list in cafe_score_total %}
+        {{ list.score }},
+      {% endfor %}
+  ]
+  commentArray = [
+      {% for list in comment_list %}
+        {{ list.count }},
+      {% endfor %}
+  ]
+  hitArray = [
+      {% for list in cafe %}
+        {{ list.hit }},
+      {% endfor %}
+  ]
+  console.log(hitArray);
+
+  for(var i=0; i<nameArray.length; i++) {
+    test[i] = [nameArray[i], scoreArray[i], commentArray[i], hitArray[i]];
+  }
+  console.log(test);
+  function drawChart() {
+    var count = 0;
+    var data = google.visualization.arrayToDataTable([
+      ['CafeName', '평점', '댓글', '조회수'],
+      test[216],
+      test[1],
+      test[234],
+      test[66],
+      test[126],
+      test[287],
+      test[71],
+      test[90],
+      test[237],
+      test[240],
+    ]);
+    var options = {
+      hAxis: {titleTextStyle: {color: '#333'}},
+      vAxis: {minValue: 0}
+    };
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
 {% endblock %}

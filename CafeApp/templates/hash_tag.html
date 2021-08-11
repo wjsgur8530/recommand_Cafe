@@ -8,15 +8,8 @@
         </div>
     </div>
 </header>
-<h1 style="text-align: center; padding: 30px; color: dodgerblue;" class="hash_text">
-    <span style="color: black;">선택 카테고리: </span>
-    {% for list in select_item %}
-        {% if list %}
-            {{ list }}
-        {% endif %}
-    {% endfor %}
-</h1>
-<h2 style="text-align: center; padding: 20px;" class="hash_text">< 추천 카페 ></h2>
+<h1 style="text-align: center; padding: 30px; color: dodgerblue;" class="hash_text">'#{{ hash_tag }}'</h1>
+<h2 style="text-align: center; padding: 20px;" class="hash_text">< 해시태그 검색 결과 ></h2>
 <div class="grid_cotainer" style="display: grid; grid-template-columns: 300px 300px 300px 300px; grid-gap: 20px 20px; align-items: center; justify-content: center; padding-bottom: 100px;">
     {% for item1, item2, item3, item4 in zip_list %}
     <div class="item">
@@ -38,4 +31,5 @@
     </div>
     {% endfor %}
 </div>
+
 {% endblock %}

@@ -9,4 +9,5 @@ urlpatterns = [
     path('detail/<int:pk>/', cafe_detail, name='detail'),
     path('theme/', category, name='theme'),
     path('theme/result/', category_result, name='category_result'),
+    path('hash/<str:theme>/', hashtag, name='hash'),
 ]
