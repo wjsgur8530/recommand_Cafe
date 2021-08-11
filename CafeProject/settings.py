@@ -99,26 +99,15 @@ WSGI_APPLICATION = 'CafeProject.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-# 	'default': {
-#     	'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'hackerton',
-#         'USER': 'root',
-#         'PASSWORD': 'jj9672@@',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#      }
-# }
-
-
 DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'HOST': 'us-cdbr-east-04.cleardb.com',
-    'USER': 'b46e7e3eff3899',
-    'NAME': 'heroku_bf5504600e0af3a',
-    'PASSWORD': 'f769afa2',
-    }
+	'default': {
+    	'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hackerton',
+        'USER': 'root',
+        'PASSWORD': 'jj9672@@',
+        'HOST': 'localhost',
+        'PORT': '3306',
+     }
 }
 
 # Password validation

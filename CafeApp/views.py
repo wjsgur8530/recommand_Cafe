@@ -249,7 +249,11 @@ def crawling(request):
 
         errorURL = 'https://www.menupan.com/errpage/err_onepage.asp'
 
-        driver = webdriver.Chrome(executable_path='C:\\recommand_Cafe\\chromedriver.exe')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+
+        driver = webdriver.Chrome(options=chrome_options)
         driver.get(url=URL)
 
         cafe_info_dict = {
