@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from selenium import webdriver
+import os
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
@@ -249,7 +250,7 @@ def crawling(request):
 
         errorURL = 'https://www.menupan.com/errpage/err_onepage.asp'
 
-        driver = webdriver.Chrome(executable_path='chromedriver')
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
         driver.get(url=URL)
 
         cafe_info_dict = {
