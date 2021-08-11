@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import json
 import os
 from pathlib import Path
+import sys
+import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.exceptions import ImproperlyConfigured
@@ -110,15 +112,44 @@ WSGI_APPLICATION = 'CafeProject.wsgi.application'
 #      }
 # }
 
-DATABASES = {
-	'default': {
-    	'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'heroku_bf5504600e0af3a',
-        'USER': 'b46e7e3eff3899',
-        'PASSWORD': 'f769afa2',
-        'HOST': 'us-cdbr-east-04.cleardb.com',
-        'PORT': '3306',
-     }
+urlparse.uses_netloc.append('mysql')
+
+try:
+
+    # Check to make sure DATABASES is set in settings.py file.
+    # If not default to {}
+
+    if 'DATABASES' not in locals():
+        DATABASES = {}
+
+    if 'DATABASE_URL' in os.environ:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+        # Ensure default database exists.
+        DATABASES['default'] = DATABASES.get('default', {})
+
+        # Update with environment configuration.
+        DATABASES['default'].update({
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        })
+
+
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except Exception:
+    print 'Unexpected error:', sys.exc_info()
+
+DATABASES['default'] = {
+    'ENGINE': 'django.db.backends.mysql',
+    'HOST': 'us-cdbr-east-04.cleardb.com',
+    'USER': 'b46e7e3eff3899',
+    'NAME': 'heroku_bf5504600e0af3a',
+    'PASSWORD': 'f769afa2',
+    'OPTIONS': {'ssl': {'ca':'/path/to/ca-cert.pem', 'cert':'/path/to/cert.pem', 'key':'/path/to/key.pem'},},
 }
 
 # Password validation
