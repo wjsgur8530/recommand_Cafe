@@ -111,13 +111,15 @@ WSGI_APPLICATION = 'CafeProject.wsgi.application'
 # }
 
 
-DATABASES['default'] = {
+DATABASES = {
+    'default': {
     'ENGINE': 'django.db.backends.mysql',
     'HOST': 'us-cdbr-east-04.cleardb.com',
     'USER': 'b46e7e3eff3899',
     'NAME': 'heroku_bf5504600e0af3a',
     'PASSWORD': 'f769afa2',
     'OPTIONS': {'ssl': {'ca':'/path/to/ca-cert.pem', 'cert':'/path/to/cert.pem', 'key':'/path/to/key.pem'},},
+    }
 }
 
 # Password validation
