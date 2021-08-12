@@ -99,15 +99,27 @@ WSGI_APPLICATION = 'CafeProject.wsgi.application'
 #     }
 # }
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hackerton', # Database 이름
+#         'USER': 'root', # 데이터베이스에서 사용할 계정
+#         'PASSWORD': 'jj9672@@', # 계정의 비밀번호
+#         'HOST': 'localhost', # 데이테베이스 주소
+#         'PORT': '3306', # 데이터베이스 포트, mysql 디폴트값은 3306
+#     }
+# }
+
 DATABASES = {
-	'default': {
-    	'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hackerton',
-        'USER': 'root',
-        'PASSWORD': 'jj9672@@',
-        'HOST': 'localhost',
-        'PORT': '3306',
-     }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'heroku_4d1d8d4df4ecd69', # Database 이름
+        'USER': 'bc8a83f42f7e0e:2d758c82', # 데이터베이스에서 사용할 계정
+        'PASSWORD': '2d758c82', # 계정의 비밀번호
+        'HOST': 'us-cdbr-east-04.cleardb.com', # 데이테베이스 주소
+        'PORT': '3306', # 데이터베이스 포트, mysql 디폴트값은 3306
+    }
 }
 
 # Password validation
